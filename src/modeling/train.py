@@ -10,6 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, f1_score
 from src.config import RANDOM_STATE
+from src.modeling.predict import evaluate_model, predict_class
 
 
 def split_data(X, y, test_size=0.2, random_state=RANDOM_STATE):
@@ -37,18 +38,6 @@ def train_model(X_train, y_train, model_params=None):
     print("Training completed")
     
     return model
-
-
-def evaluate_model(model, X_test, y_test):
-    """Evaluate model and return metrics"""
-    y_pred = model.predict(X_test)
-    f1 = f1_score(y_test, y_pred)
-    cr = classification_report(y_test, y_pred, output_dict=True)
-    cr = pd.DataFrame(cr).transpose()
-
-    print(f"F1-Score: {f1:.3f}")
-    return f1, cr
-
 
 def save_model(model, filepath):
     """Save model using joblib"""
