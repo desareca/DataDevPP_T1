@@ -1,61 +1,139 @@
-# src
+# Predictor de Propinas para Taxis de NYC
 
-<a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
-    <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
-</a>
+## Descripción General del Proyecto
 
-Clasificador de Propinas para Viajes en Taxi en NYC (2020)
+Este proyecto implementa una solución de machine learning para predecir propinas altas (>20% del costo del viaje) en los viajes de taxi de Nueva York. El modelo se entrena con datos de enero de 2020 y se evalúa en los meses siguientes para analizar su degradación de rendimiento a lo largo del tiempo.
 
-## Project Organization
+### Características Principales
+
+- **Modelo de Machine Learning**: Clasificador Random Forest para predicción binaria de propinas
+- **Evaluación Temporal**: Evaluación sistemática mes a mes del modelo
+- **Análisis de Data Drift**: Comparación estadística de distribuciones entre meses
+- **Pipeline Automatizado**: Estructura de código modular para análisis reproducible
+
+## Estructura del Proyecto
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         src and configuration for tools like black
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── src   <- Source code for use in this project.
-    │
-    ├── __init__.py             <- Makes src a Python module
-    │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+├── data/               # Archivos de datos (no versionados en git)
+├── docs/              # Documentación
+├── models/            # Modelos entrenados
+├── notebooks/         # Notebooks de Jupyter
+├── references/        # Materiales de referencia
+├── reports/          # Reportes generados
+├── src/              # Código fuente
+│   ├── data/         # Carga y preprocesamiento de datos
+│   ├── features/     # Ingeniería de características
+│   ├── modeling/     # Entrenamiento y predicción
+│   └── visualization/# Utilidades de visualización
+├── requirements.txt   # Dependencias del proyecto
+└── README.md
 ```
 
---------
+## Comenzando
+
+### Prerequisitos
+
+- Python 3.11
+- Git
+- Herramienta de entorno virtual (ej: venv, conda)
+
+### Instalación
+
+1. Clonar el repositorio
+```bash
+git clone https://github.com/desareca/DataDevPP_T1
+cd DataDevPP_T1
+```
+
+2. Crear y activar un entorno virtual
+```bash
+# Usando venv
+python -m venv venv
+# En Windows
+venv\Scripts\activate
+# En Unix o MacOS
+source venv/bin/activate
+```
+
+3. Instalar dependencias
+```bash
+pip install -r requirements.txt
+```
+
+### Configuración de Datos
+
+El proyecto utiliza datos de viajes de la Comisión de Taxis y Limosinas de NYC (TLC) del 2020. Sigue estos pasos para configurar los datos:
+
+1. Crea un directorio `data/raw` en tu carpeta del proyecto
+2. Descarga los datos de viajes de Yellow Taxi del 2020 (formato Parquet) desde el [sitio web de NYC TLC](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+3. Coloca los archivos descargados en el directorio `data/raw`
+
+### Ejecutando el Análisis
+
+1. Navega al directorio `notebooks`
+2. Abre y ejecuta el notebook de Jupyter `01_csaquel_nyc_taxi_model.ipynb`
+```bash
+jupyter lab
+```
+
+## Pipeline del Modelo
+
+1. **Preprocesamiento de Datos** (`src.data.dataset`)
+   - Carga archivos Parquet
+   - Limpia y estandariza datos
+   - Implementa pipeline completo desde carga hasta generación de features
+
+2. **Ingeniería de Características** (`src.features.build_features`)
+   - Crea características relevantes para la predicción de propinas
+   - Maneja variables categóricas
+   - Implementa selección de características
+
+3. **Entrenamiento del Modelo** (`src.modeling.train`)
+   - Entrena el Clasificador Random Forest
+   - Guarda artefactos del modelo
+   - Implementa validación cruzada
+
+4. **Evaluación** (`src.modeling.predict`)
+   - Realiza evaluaciones mensuales
+   - Calcula métricas de rendimiento
+   - Analiza la degradación del modelo
+
+## Estado del Proyecto y Mejoras
+
+Basado en el análisis del proyecto, aquí hay algunas mejoras sugeridas:
+
+1. **Documentación**
+   - Agregar docstrings a los módulos Python
+   - Crear documentación API usando mkdocs
+   - Agregar notebooks de ejemplo para casos específicos
+
+2. **Pruebas**
+   - Implementar pruebas unitarias para funciones principales
+   - Agregar pruebas de integración para el pipeline
+   - Configurar integración continua
+
+3. **Configuración**
+   - Crear archivo de configuración para parámetros del modelo
+   - Agregar variables de entorno para rutas y configuraciones
+   - Implementar logging
+
+4. **Despliegue**
+   - Crear API para servir el modelo
+   - Containerizar la aplicación
+   - Configurar monitoreo del rendimiento del modelo
+
+## Contribuciones
+
+Las contribuciones son bienvenidas. Por favor, sigue estos pasos:
+
+1. Fork del repositorio
+2. Crea una rama para tu funcionalidad (`git checkout -b feature/AmazingFeature`)
+3. Commit de tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
+
 
