@@ -1,9 +1,3 @@
-"""
-train.py - Simple model training for NYC Taxi tip classification
-
-Simple functions to train RandomForest and save with joblib
-"""
-
 import pandas as pd
 import joblib
 from sklearn.ensemble import RandomForestClassifier
@@ -14,7 +8,7 @@ from src.modeling.predict import evaluate_model, predict_class
 
 
 def split_data(X, y, test_size=0.2, random_state=RANDOM_STATE):
-    """Split data into train/test"""
+    """divide data train/test"""
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=random_state, stratify=y
     )
@@ -23,7 +17,7 @@ def split_data(X, y, test_size=0.2, random_state=RANDOM_STATE):
 
 
 def train_model(X_train, y_train, model_params=None):
-    """Train RandomForest model"""
+    """Entrena modelo RandomForest"""
     if model_params is None:
         model_params = {
             'n_estimators': 100,
@@ -40,7 +34,7 @@ def train_model(X_train, y_train, model_params=None):
     return model
 
 def save_model(model, filepath):
-    """Save model using joblib"""
+    """Guarda modelo"""
     joblib.dump(model, filepath)
     print(f"Model saved to: {filepath}")
 
@@ -56,10 +50,15 @@ def train_and_save(X, y, model_path, model_params=None, test_size=0.2):
     model = train_model(X_train, y_train, model_params)
     
     # Evaluate
-    f1, cr = evaluate_model(model, X_test, y_test)
+    acc, f1, auc, _, _, cr = evaluate_model(model, X_test, y_test)
+
+    print(f"\nAccuracy: {acc:.3f}")
+    print(f"F1-Score: {f1:.3f}")
+    print(f"AUC: {auc:.3f}")
+    print(f"Classification Report:\n{cr}")
     
     # Save
     save_model(model, model_path)
     
     print(f"Pipeline completed.")
-    return model, f1, cr
+    return model
