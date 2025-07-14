@@ -11,21 +11,21 @@ Este proyecto implementa una solución de machine learning para predecir propina
 - **Análisis de Data Drift**: Comparación estadística de distribuciones entre meses
 - **Pipeline Automatizado**: Estructura de código modular para análisis reproducible
 
-## Estructura del Proyecto
+## Estructura Principal del Proyecto
 
 ```
 ├── data/               # Archivos de datos (no versionados en git)
-├── docs/              # Documentación
-├── models/            # Modelos entrenados
-├── notebooks/         # Notebooks de Jupyter
-├── references/        # Materiales de referencia
-├── reports/          # Reportes generados
-├── src/              # Código fuente
-│   ├── data/         # Carga y preprocesamiento de datos
-│   ├── features/     # Ingeniería de características
-│   ├── modeling/     # Entrenamiento y predicción
-│   └── visualization/# Utilidades de visualización
-├── requirements.txt   # Dependencias del proyecto
+├── docs/               # Documentación
+├── models/             # Modelos entrenados
+├── notebooks/          # Notebooks de Jupyter
+├── references/         # Materiales de referencia
+├── reports/            # Reportes generados e imagenes
+├── src/                # Código fuente
+│   ├── data/           # Carga y preprocesamiento de datos
+│   ├── features/       # Ingeniería de características
+│   ├── modeling/       # Entrenamiento y predicción
+│   └── visualization/  # Utilidades de visualización
+├── requirements.txt    # Dependencias del proyecto
 └── README.md
 ```
 
@@ -64,17 +64,15 @@ pip install -r requirements.txt
 
 El proyecto utiliza datos de viajes de la Comisión de Taxis y Limosinas de NYC (TLC) del 2020. Sigue estos pasos para configurar los datos:
 
-1. Crea un directorio `data/raw` en tu carpeta del proyecto
-2. Descarga los datos de viajes de Yellow Taxi del 2020 (formato Parquet) desde el [sitio web de NYC TLC](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
-3. Coloca los archivos descargados en el directorio `data/raw`
+1. Crea un directorio `data/raw`, `data/processed`, `data/interim` y `data/external` en tu carpeta del proyecto
+2. Utiliza los datos de viajes de Yellow Taxi del 2020 (formato Parquet) desde el [sitio web de NYC TLC](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+3. Descarga y guarda los archivos descargados en el directorio `data/raw`
 
 ### Ejecutando el Análisis
 
 1. Navega al directorio `notebooks`
 2. Abre y ejecuta el notebook de Jupyter `01_csaquel_nyc_taxi_model.ipynb`
-```bash
-jupyter lab
-```
+
 
 ## Pipeline del Modelo
 
@@ -122,18 +120,6 @@ Basado en el análisis del proyecto, aquí hay algunas mejoras sugeridas:
    - Containerizar la aplicación
    - Configurar monitoreo del rendimiento del modelo
 
-## Contribuciones
 
-Las contribuciones son bienvenidas. Por favor, sigue estos pasos:
-
-1. Fork del repositorio
-2. Crea una rama para tu funcionalidad (`git checkout -b feature/AmazingFeature`)
-3. Commit de tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
 
 
